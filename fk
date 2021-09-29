@@ -1,24 +1,36 @@
+import numpy as np
+import math
 #link lengths
 a1=a2=a3=a4=a5=a6=a7=1.0
+
+d3=1.0
+d1=1.0
+
 #joint angles
+T1=T2=T3=T4=T5=T6=0
 
 #parameter table
-PT=np.array[[np.radians(0), np.radians(0), 0.0, a1+d1 ],
-            [np.radians(T2+90), np,radians(90), 0, a2],
-            [np.radians(0), np.radians(0), 0, a3+a4],
-            [np.radians(T4+90), np.radians(-90), 0, a5],
-            [np.radians(T5), np.radians(90), 0, 0],
-            [np.radians(T6), np.radians(0), 0, a6+a7]]
+PT=np.array([[np.deg2rad(0), np.deg2rad(0), 0.0, a1+d1 ],
+            [np.deg2rad(T2+90), np.deg2rad(90), 0, a2],
+            [np.deg2rad(0), np.deg2rad(0), 0.0, a3+a4],
+            [np.deg2rad(T4+90), np.deg2rad(-90), 0.0, a5],
+            [np.deg2rad(T5), np.deg2rad(90), 0.0, 0.0],
+            [np.deg2rad(T6), np.deg2rad(0), 0.0, a6+a7]])
+
+print(PT)
+
 
 HT=[]
 for i in range(6):
-    for j in range(4):
-        mat=np.array[[np.cos(PT[i][j]), -np.sin(PT[i][j])*np.cos(PT[i][j+1]), np.sin(PT[i][j])*np.sin(PT[i][j+1]), PT[i][j+2]*np.cos(PT[i][i+3])], 
-                     [np.sin(PT[i][j]), np.cos(PT[i][j])*np.cos(PT[i][j+1]), -np.cos(PT[i][j])*np.sin(PT[i][j+1]), PT[i][j+2]*np.sin(PT[i][i+3])],
-                     [0.0, np.sin(PT[i][j+1]), np.cos(PT[i][j+1]), PT[i][j+2]],
-                     [0.0, 0.0, 0.0, 1.0]]
+  mat=np.array([[np.cos(PT[i][0]), -np.sin(PT[i][0])*np.cos(PT[i][1]), np.sin(PT[i][0])*np.sin(PT[i][1]), PT[i][2]*np.cos(PT[i][3])], 
+                     [np.sin(PT[i][0]), np.cos(PT[i][0])*np.cos(PT[i][1]), -np.cos(PT[i][0])*np.sin(PT[i][1]), PT[i][2]*np.sin(PT[i][3])],
+                     [0.0, np.sin(PT[i][1]), np.cos(PT[i][1]), PT[i][2]],
+                     [0.0, 0.0, 0.0, 1.0]])
 
-        HT.append(mat)
+  HT.append(mat)
+    
+        
+    
 
 
 
@@ -29,9 +41,12 @@ H3_4=HT[3]
 H4_5=HT[4]
 H5_6=HT[5]
 
+
+
 H0_2=np.matmul(H0_1,H1_2)
 H0_3=np.matmul(H0_2,H2_3)
 H0_4=np.matmul(H0_3,H3_4)
 H0_5=np.matmul(H0_4,H4_5)
 H0_6=np.matmul(H0_5,H5_6)
 
+print(H0_6)

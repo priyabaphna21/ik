@@ -1,0 +1,26 @@
+import numpy as np
+x=5.0
+y=2.0
+z=1.0
+d3=sqrt(x^2+y^2)-a3-a4
+d1=z-a1-a2
+T2=np.arctan2(y,x)
+
+r0_6=[[-1.0,0.0,0.0],
+      [0.0,-1.0,0.0],
+      [0.0,0.0,1.0]]
+
+r0_3=[[-np.sin(T2),0.0,np.cos(T2)],
+      [np.cos(T2),0.0,np.sin(T2)],
+      [0.0,1.0,0.0]]
+
+inv_r0_3=np.linalg.inv(r0_3)
+
+r3_6=np.dot(inv_r0_3,r0_6)
+
+T5=np.arccos(r3_6[2][2])
+
+T6=np.arccos(r3_6[2][0]/np.sin(T5))
+
+T4=np.arccos(r3_6[1][2]/np.sin(T5))
+

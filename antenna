@@ -1,0 +1,46 @@
+import socket
+import os
+import time
+import threading
+import sys
+
+# msg='t'
+HEADER =100
+PORT =5005
+# Below is port for LAN to UART
+# PORT=5005
+FORMAT = 'utf-8'
+DISCONNECT_MESSAGE ="!DISCONNECT"
+class Comm():
+    
+    def __init__(self):
+        
+        self.SERVER = socket.gethostbyname(socket.gethostname())
+        # Below is IP for LAN to UART
+        self.SERVER="192.168.1.7"
+        self.ADDR=(self.SERVER,PORT)
+        self.client =socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client.connect(self.ADDR)
+        # ps4.a.camera_2.setText("Hello")
+
+    def send(self,msg):
+        self.message=msg.encode(FORMAT)
+        self.msg_length=len(self.message)
+        self.send_length=str(self.msg_length).encode(FORMAT)
+        
+        #We are padding spaces to make message 64 bytes
+        self.send_length +=b' '*(HEADER-len(self.send_length))
+        self.client.send(self.send_length)
+        self.client.sendall(self.message)
+
+    def SendMsg(self,msg):
+        comm.send(msg)
+        print(msg)
+
+
+
+
+comm=Comm()
+while(1):
+    
+    comm.SendMsg('t')
